@@ -1,0 +1,35 @@
+#include<iostream>
+#include<vector>
+#include<math.h>
+#include<set>
+#include<map>
+#include<algorithm>
+#include<string>
+#define lli long long int
+using namespace std;
+void prt(vector<vector<int>> s){
+    for(int i=0; i<s.size(); i++){
+        cout<< s[i][0]<<' '<< s[i][1]<< endl;
+    }
+}
+int main(){
+   vector<vector<int>> newIntervals;
+   int n; cin>> n;
+   vector<vector<int>> intervals(n,vector<int>(2));
+   for(int i=0; i<n; i++){
+    cin>> intervals[i][0]>> intervals[i][1];
+   }
+   sort(intervals.begin(), intervals.end(),[](vector<int>& a, vector<int>& b){return a[0]<b[0];});
+   intervals.push_back({INT_MAX,INT_MAX});
+   int head= intervals[0][0], tail=intervals[0][1];
+   for(int i=1; i<intervals.size(); i++){
+    if(intervals[i][0]>tail){
+        newIntervals.push_back({head,tail});
+        head= intervals[i][0]; tail= intervals[i][1];
+    }
+    else tail= max(tail,intervals[i][1]);
+   }
+   cout<< newIntervals.size()<< endl;
+   prt(newIntervals);
+   return 0;
+}
